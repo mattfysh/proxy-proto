@@ -1,0 +1,9 @@
+:443, example.com
+route {
+  forward_proxy {
+    ports     80 443
+    hide_ip
+    hide_via
+  }
+  file_server
+}
