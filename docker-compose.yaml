@@ -2,30 +2,15 @@ version: "3.9"
 
 services:
   proxy:
-    # depends_on:
-    #   - certs
     build: ./caddy
-    # command: ./caddy run --config ./config/default.json
     ports:
       - "80:80"
       - "443:443"
-      - "5020:5020"
     volumes:
-      # - "certs:/etc/nginx/certs:ro"
       - "./caddy/config:/app/config:ro"
     networks:
       platform:
         ipv4_address: 10.5.0.2
-
-  # certs:
-  #   environment:
-  #     - CA_CERT=/certs/self-signed.crt
-  #     - CA_KEY=/certs/self-signed.key
-  #     - CA_EXPIRE=3650
-  #     - SSL_SIZE=2048
-  #   image: paulczar/omgwtfssl
-  #   volumes:
-  #     - certs:/certs
 
   dns:
     image: 4km3/dnsmasq:2.85-r2
@@ -41,8 +26,6 @@ services:
 
   worker:
     build: ./worker
-    # volumes:
-    #   - certs:/certs
     dns:
       - 10.5.0.3
     networks:
@@ -55,6 +38,3 @@ networks:
       config:
         - subnet: 10.5.0.0/16
           gateway: 10.5.0.1
-
-# volumes:
-#   certs:

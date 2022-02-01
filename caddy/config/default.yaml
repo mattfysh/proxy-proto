@@ -12,9 +12,6 @@ apps:
           - match:
               - http: []
             handle:
-              - handler: tee
-                branch:
-                  -
               - handler: proxy
                 upstreams:
                   - dial:
