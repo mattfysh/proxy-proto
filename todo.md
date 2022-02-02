@@ -1,6 +1,3 @@
-# mitm intercept
-copy caddy root ca to worker for trusted tls
-
 # write http req/res traffic to disk
 can tee branch access both request AND response bytes?
 write file IO caddy module
@@ -12,6 +9,7 @@ identify origin of traffic and write alongisde disk e.g. MAC address
 
 # and then
 test keepalive
+reduce size of proxy image
 embed dns in worker image, use forego Procfile
 learn difference between reverse_proxy and forward_proxy
 ensure when running on AWS that the proxy is unreachable outside the network
