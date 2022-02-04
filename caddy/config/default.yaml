@@ -13,6 +13,7 @@ apps:
           - match:
               - http: []
             handle:
+              - handler: log
               - handler: proxy
                 upstreams:
                   - dial:
@@ -26,6 +27,7 @@ apps:
               - tls: {}
             handle:
               - handler: tls
+              - handler: log
               - handler: proxy
                 upstreams:
                   - dial:
