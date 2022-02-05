@@ -14,7 +14,7 @@ RUN apt install -y \
 # build caddy with non-standard modules
 RUN sh install.sh
 RUN xcaddy build \
-    --with github.com/unwebio/caddy-l4@32c4b41 \
+    --with github.com/unwebio/caddy-l4@8810c29 \
     --with github.com/abiosoft/caddy-yaml
 
 # generate CA and make it available on the ca_cert volume
