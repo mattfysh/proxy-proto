@@ -1,28 +1,12 @@
-FROM golang
+FROM public.ecr.aws/docker/library/caddy:builder AS builder
 
-WORKDIR /app
-COPY install.sh /app
-
-RUN apt update
-RUN apt install -y \
-    debian-keyring \
-    debian-archive-keyring \
-    apt-transport-https \
-    curl \
-    libnss3-tools
-
-# build caddy with non-standard modules
-RUN sh install.sh
 RUN xcaddy build \
-    --with github.com/unwebio/caddy-l4@8810c29 \
+    --with github.com/mholt/caddy-l4=github.com/unwebio/caddy-l4@bdc5d0e \
     --with github.com/abiosoft/caddy-yaml
 
-# generate CA and make it available on the ca_cert volume
-# RUN \
-#   ./caddy trust && \
-#   mkdir -p /ca_cert && \
-#   cp /root/.local/share/caddy/pki/authorities/local/root.crt /ca_cert/root.crt
-# VOLUME /ca_cert
+FROM public.ecr.aws/docker/library/caddy
 
-# run caddy
-CMD ./caddy run --config ./config/default.yaml --adapter yaml
+COPY --from=builder /usr/bin/caddy /usr/bin/caddy
+RUN caddy trust
+
+CMD caddy run --config /config/default.yaml --adapter yaml

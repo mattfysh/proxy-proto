@@ -7,8 +7,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "./caddy/config:/app/config:ro"
-      - "certs:/ca_cert"
+      - ./caddy/data:/data
+      - ./caddy/config:/config
     networks:
       platform:
         ipv4_address: 10.5.0.2
@@ -30,7 +30,7 @@ services:
     dns:
       - 10.5.0.3
     volumes:
-      - "certs:/caddy_ca_cert"
+      - ./caddy/data:/caddy_data
     networks:
       platform:
         ipv4_address: 10.5.0.4
@@ -41,6 +41,3 @@ networks:
       config:
         - subnet: 10.5.0.0/16
           gateway: 10.5.0.1
-
-volumes:
-  certs:
